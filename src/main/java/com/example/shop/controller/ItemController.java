@@ -28,4 +28,9 @@ public class ItemController {
         return itemService.getList();
     }
 
+    @PutMapping("/{id}")
+    public ItemResponseDto updateItem(@PathVariable Long id,@RequestBody ItemRequestDto itemRequestDto){
+        return itemService.updateItem(id, itemRequestDto);
+    }
+
 }

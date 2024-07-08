@@ -7,6 +7,7 @@ import com.example.shop.entity.Item;
 import com.example.shop.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -30,5 +31,22 @@ public class ItemService {
         return itemRepository.findAll().stream().map(
                 ItemResponseDto::new
         ).toList();
+    }
+
+    @Transactional
+    public ItemResponseDto updateItem(Long id, ItemRequestDto itemRequestDto) {
+        Item item = findItem(id);
+
+        item.update(itemRequestDto);
+
+        ItemResponseDto itemResponseDto = new ItemResponseDto(item);
+
+        return itemResponseDto;
+    }
+
+    private Item findItem(Long id) {
+        return itemRepository.findById(id).orElseThrow(()->
+            new IllegalArgumentException("선택한 상품은 존재하지 않습니다.")
+        );
     }
 }
