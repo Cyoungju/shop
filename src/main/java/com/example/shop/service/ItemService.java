@@ -4,6 +4,7 @@ package com.example.shop.service;
 import com.example.shop.dto.ItemRequestDto;
 import com.example.shop.dto.ItemResponseDto;
 import com.example.shop.entity.Item;
+import com.example.shop.entity.Mag;
 import com.example.shop.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -44,9 +45,19 @@ public class ItemService {
         return itemResponseDto;
     }
 
+    public Mag deleteItem(Long id) {
+        Item item = findItem(id);
+
+        itemRepository.delete(item);
+        return new Mag("삭제 완료");
+
+    }
+
+
     private Item findItem(Long id) {
         return itemRepository.findById(id).orElseThrow(()->
-            new IllegalArgumentException("선택한 상품은 존재하지 않습니다.")
+                new IllegalArgumentException("선택한 상품은 존재하지 않습니다.")
         );
     }
+
 }
