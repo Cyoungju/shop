@@ -8,6 +8,8 @@ import com.example.shop.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ItemService {
@@ -22,5 +24,11 @@ public class ItemService {
         ItemResponseDto itemResponseDto = new ItemResponseDto(saveItem);
 
         return itemResponseDto;
+    }
+
+    public List<ItemResponseDto> getList() {
+        return itemRepository.findAll().stream().map(
+                ItemResponseDto::new
+        ).toList();
     }
 }
